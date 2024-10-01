@@ -3,11 +3,11 @@ import type { RisRoutingRequestBody } from "../dto/RisRoutingRequestBody";
 import type { RisRoutingResponseBody } from "../dto/RisRoutingResponseBody";
 import { TravellerPersona } from "../dto/TravellerPersona";
 
-export async function queryRouting(departureEva: string, arrivalEva: string): Promise<RisRoutingResponseBody> {
+export async function queryRouting(departureEva: string, arrivalEva: string, departureDateTime: string): Promise<RisRoutingResponseBody> {
     const risRoutingRequestBody: RisRoutingRequestBody = {
         provider: "HAFAS",
         connectionEvaluationPersona: [ TravellerPersona.OCCASIONAL_TRAVELLER ],
-        departureTime: "2024-10-01T12:26:00Z",
+        departureTime: departureDateTime,
         origin: {
             evaNumber: departureEva,
             type: "STOP_PLACE",
