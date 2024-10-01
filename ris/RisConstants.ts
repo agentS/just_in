@@ -1,0 +1,1 @@
+export const HTTP_STATUS_CODE_SUCCESS = 200;
