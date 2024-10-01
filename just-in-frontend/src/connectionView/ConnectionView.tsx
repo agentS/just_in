@@ -36,6 +36,7 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
                         ...this.state,
                         trip: await response.json(),
                     });
+                    this.displayNotification("Ihr Anschluss von München Hbf nach Salzburg Hbf kann nicht erreicht werden!");
                 })
                 .catch((exception) => {
                     alert("Fehler beim Laden der Reise!");
@@ -48,19 +49,20 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
         if (this.state?.trip !== undefined && this.state?.trip !== null) {
             return (
                 <div className="m-2">
+                    <h1>Meine Reise</h1>
                     <p>Reisebeginn: {this.toLocalDateTime(this.state.trip.plannedTripStart)}</p>
                     <p>Ankunftszeit: {this.toLocalDateTime(this.state.trip.plannedTripEnd)}</p>
 
                     { this.state.trip.legs.map((leg, index) => (
                         leg.type === RisJourneyType.JOURNEY
                             ? (
-                                <div>
+                                <div key={`leg_journey_${index}`}>
                                     <p>Abfahrt von <strong>{ leg.departure?.stopPlace.name }</strong> auf <strong>Gleis {leg.departure?.platform}</strong> um <strong>{ this.toLocalTime(leg.departure?.time!) }</strong> mit Ankunft in <strong>{ leg.arrival?.stopPlace.name }</strong> auf <strong>Gleis {leg.arrival?.platform}</strong> um <strong>{ this.toLocalTime(leg.arrival?.time!) }</strong></p>
                                     <hr />
                                 </div>
                             )
                             : (
-                                <div>
+                                <div key={`leg_journey_${index}`}>
                                     { leg.evaluation?.status === TripStatus.SAFE ? <p>✅ Anschluss erreichbar</p> : <p>❌ <strong>Anschluss nach {this.state.trip?.legs[index + 1].departure?.stopPlace.name} nicht m&ouml;glich</strong></p> }
                                     <hr />
                                 </div>
@@ -79,6 +81,18 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
 
     toLocalDateTime(dateTimeString: string) {
         return new Date(dateTimeString).toLocaleString("de-at");
+    }
+
+    displayNotification(message: string) {
+        if (Notification.permission === "granted") {
+            const notification = new Notification(message, { requireInteraction: true });
+        } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then((permission) => {
+                if (permission === "granted") {
+                    const notification = new Notification(message, { requireInteraction: true });
+                }
+            });
+        }
     }
 }
 
