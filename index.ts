@@ -1,5 +1,6 @@
 import { Elysia } from "elysia";
 import { swagger } from "@elysiajs/swagger";
+import { cors } from "@elysiajs/cors";
 import { RisJourneyType } from "./dto/RisJourneyType";
 import type { RisTripRequestLeg } from "./dto/RisTripRequest";
 import { TravellerPersona } from "./dto/TravellerPersona";
@@ -11,7 +12,8 @@ import { TripStatus } from "./dto/TripStatus";
 const SERVER_PORT = 8080;
 
 // we found a bug in the RIS::Trips API --> please ask Thies Clasen for more information 
-const webApplication = new Elysia()
+new Elysia()
+    .use(cors())
     .use(swagger())
     // curl -X POST -i http://127.0.0.1:8080/registerJourney/8011160/8102067/2024-10-01T06:26:00Z
     .post("/registerJourney/:departureId/:arrivalId/:departureDate", async ({ params: { departureId, arrivalId, departureDate } }) => {

@@ -1,15 +1,8 @@
-# just_in
+# Just-In
 
-To install dependencies:
-
-```bash
-bun install
-```
-
-To run:
-
-```bash
-bun run index.ts
-```
-
-This project was created using `bun init` in bun v1.1.29. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
+- Flow-Chart des UI
+- Architektur
+    - Interoperabilität hervorheben
+    - Implementierung für DB-RIS
+    - Schnittstellen der SBB vorhanden
+    - 
