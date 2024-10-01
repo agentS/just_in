@@ -9,6 +9,7 @@ interface ConnectionViewProperties {
 
 interface ConnectionViewState {
     trip: RisTripResponseBody | null;
+    notificationDisplayed: boolean;
 };
 
 class ConnectionView extends React.Component<ConnectionViewProperties, ConnectionViewState> {
@@ -17,6 +18,7 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
 
         this.state = {
             trip: null,
+            notificationDisplayed: false,
         };
     }
 
@@ -32,11 +34,14 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
                     if (response.status !== 200) {
                         throw new Error(await response.text());
                     }
+                    if (this.state.notificationDisplayed === false) {
+                        this.displayNotification("Ihr Anschluss von München Hbf nach Salzburg Hbf kann nicht erreicht werden!");
+                    }
                     this.setState({
                         ...this.state,
                         trip: await response.json(),
+                        notificationDisplayed: true,
                     });
-                    this.displayNotification("Ihr Anschluss von München Hbf nach Salzburg Hbf kann nicht erreicht werden!");
                 })
                 .catch((exception) => {
                     alert("Fehler beim Laden der Reise!");
