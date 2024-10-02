@@ -17,6 +17,10 @@ A user is informed about delays and if she or he can reach each connecting train
 
 ![View providing updates to the user](documentation/connectionView.png)
 
+The user is informed about a delay using a notification.
+
+![Notification informing about delay](documentation/notification.png)
+
 ### Web Front End
 
 ## Architecture
