@@ -19,6 +19,8 @@ Our research has shown that our concept is feasible and we created a minimum PoC
 
 Moreover, our architecture allows integration into existing applications.
 
+However, we had to little time and too few developers to implement the entire concept. Moreover, we reported a reproducible bug in the DB RIS::Trips API.
+
 ### Prototype - Web Front End
 
 The user is able to register for journey updates using the booking code.
