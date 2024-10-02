@@ -13,6 +13,12 @@ The flow chart captures the entire workflow with dependencies to external system
 
 ![Flow chart](documentation/flowChart.svg)
 
+### Results
+
+Our research has shown that our concept is feasible and we created a minimum PoC using the DB RIS APIs. Furthermore, we identified [suitable SBB APIs](https://developer.sbb.ch/apis/siri-v20/information) suitable for the task at hand.
+
+Moreover, our architecture allows integration into existing applications.
+
 ### Prototype - Web Front End
 
 The user is able to register for journey updates using the booking code.
