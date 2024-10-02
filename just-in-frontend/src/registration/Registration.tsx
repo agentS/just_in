@@ -2,6 +2,7 @@ import React from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { RegistrationMethod } from "./RegistrationMethod";
+import { BACKEND_BASE_URL } from "../Constants";
 
 interface RegistrationProperties {
     onRegistered: (tripId: string) => void;
@@ -11,6 +12,9 @@ interface RegistrationState {
     inputMethod: RegistrationMethod,
     bookingCode: string,
     registrationInProgress: boolean,
+    departureStationName: string,
+    arrivalStationName: string,
+    departureDateTime: string,
 };
 
 class Registration extends React.Component<RegistrationProperties, RegistrationState> {
@@ -18,9 +22,12 @@ class Registration extends React.Component<RegistrationProperties, RegistrationS
         super(properties);
 
         this.state = {
-            inputMethod: RegistrationMethod.BOOKING_CODE,
+            inputMethod: RegistrationMethod.CONNECTION_SEARCH,
             bookingCode: "2117 0964 8046 2693",
             registrationInProgress: false,
+            departureStationName: "Berlin Hbf",
+            arrivalStationName: "Ostermiething",
+            departureDateTime: "01.10.2024 14:03",
         };
     }
 
@@ -31,25 +38,50 @@ class Registration extends React.Component<RegistrationProperties, RegistrationS
                     <h1>F&uuml;r Reisebenachrichtungen registrieren</h1>
                     <Form onSubmit={() => this.setState({ ...this.state, registrationInProgress: true })}>
                         <Form.Group>
-                            <Form.Check type="radio" checked={this.state.inputMethod === RegistrationMethod.BOOKING_CODE} name="input_method" id={RegistrationMethod.BOOKING_CODE} inline label="Buchungscode" onChange={() => console.log("TODO")} />
-                            <Form.Check type="radio" checked={this.state.inputMethod === RegistrationMethod.CAMERA} name="input_method" id={RegistrationMethod.CAMERA} inline label="Scann mittels Kamera" onChange={() => console.log("TODO")} />
-                            <Form.Check type="radio" checked={this.state.inputMethod === RegistrationMethod.CONNECTION_SEARCH} name="input_method" id={RegistrationMethod.CONNECTION_SEARCH} inline label="Verbindungssuche" onChange={() => console.log("TODO")} />
+                            <Form.Check type="radio" checked={this.state.inputMethod === RegistrationMethod.BOOKING_CODE} name="input_method" id={RegistrationMethod.BOOKING_CODE} inline label="Buchungscode" onChange={() => this.setState({ ...this.state, inputMethod: RegistrationMethod.BOOKING_CODE })} />
+                            <Form.Check type="radio" checked={this.state.inputMethod === RegistrationMethod.CAMERA} name="input_method" id={RegistrationMethod.CAMERA} inline label="Scann mittels Kamera" onChange={() => this.setState({ ...this.state, inputMethod: RegistrationMethod.CAMERA })} />
+                            <Form.Check type="radio" checked={this.state.inputMethod === RegistrationMethod.CONNECTION_SEARCH} name="input_method" id={RegistrationMethod.CONNECTION_SEARCH} inline label="Verbindungssuche" onChange={() => this.setState({ ...this.state, inputMethod: RegistrationMethod.CONNECTION_SEARCH })} />
                         </Form.Group>
-                        <Form.Group>
-                            <Form.Label>Buchungscode</Form.Label>
-                            <Form.Control type="text" placeholder="2117 0964 8046 2693"
-                                value={this.state.bookingCode} onChange={(event) => this.setState({ ...this.state, bookingCode: event.currentTarget.value })} />
-                            <Form.Text className="text-muted">Der Buchungscode hat 16 Ziffern und besteht aus vier Gruppen zu je vier Ziffern</Form.Text>
-                        </Form.Group>
-                        <Form.Group>
-                            <Button variant="primary" type="submit">Reiseupdates anzeigen</Button>
+                        {
+                            this.state.inputMethod === RegistrationMethod.CONNECTION_SEARCH
+                                ? (
+                                    <div>
+                                        <Form.Group>
+                                            <Form.Label>Abfahrtsbahnhof</Form.Label>
+                                            <Form.Control type="text" placeholder="Berlin Hbf"
+                                                value={this.state.departureStationName} onChange={(event) => this.setState({ ...this.state, departureStationName: event.currentTarget.value })} />
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <Form.Label>Ankunftsbahnhof</Form.Label>
+                                            <Form.Control type="text" placeholder="Ostermiething"
+                                                value={this.state.arrivalStationName} onChange={(event) => this.setState({ ...this.state, arrivalStationName: event.currentTarget.value })} />
+                                        </Form.Group>
+                                        <Form.Group>
+                                            <Form.Label>Abfahrtszeit</Form.Label>
+                                            <Form.Control type="text" placeholder="Ostermiething"
+                                                value={this.state.departureDateTime} onChange={(event) => this.setState({ ...this.state, departureDateTime: event.currentTarget.value })} />
+                                        </Form.Group>
+                                    </div>
+                                )
+                                : (
+                                    <Form.Group>
+                                        <Form.Label>Buchungscode</Form.Label>
+                                        <Form.Control type="text" placeholder="2117 0964 8046 2693"
+                                            value={this.state.bookingCode} onChange={(event) => this.setState({ ...this.state, bookingCode: event.currentTarget.value })} />
+                                        <Form.Text className="text-muted">Der Buchungscode hat 16 Ziffern und besteht aus vier Gruppen zu je vier Ziffern</Form.Text>
+                                    </Form.Group>
+                                )
+                        }
+                        
+                        <Form.Group className="mt-2">
+                            <Button variant="primary" type="submit">Reisebenachrichtungen erhalten</Button>
                         </Form.Group>
                     </Form>
                 </div>
             );
         } else {
             fetch(
-                "http://127.0.0.1:8080/registerJourney/8011160/8102067/2024-10-01T06:26:00Z",
+                `${BACKEND_BASE_URL}/registerJourney/8011160/8102067/2024-10-01T06:26:00Z`,
                 {
                     method: "POST",
                 }

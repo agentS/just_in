@@ -2,6 +2,7 @@ import React from "react";
 import { RisTripResponseBody } from "../dto/RisTripResponseBody";
 import { RisJourneyType } from "../dto/RisJourneyType";
 import { TripStatus } from "../dto/TripStatus";
+import { BACKEND_BASE_URL } from "../Constants";
 
 interface ConnectionViewProperties {
     tripId: string;
@@ -25,7 +26,7 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
     componentDidMount(): void {
         if (this.state.trip === undefined || this.state.trip === null) {
             fetch(
-                `http://127.0.0.1:8080/loadJourney/${this.props.tripId}`,
+                `${BACKEND_BASE_URL}/loadJourney/${this.props.tripId}`,
                 {
                     method: "GET"
                 }
@@ -81,7 +82,7 @@ class ConnectionView extends React.Component<ConnectionViewProperties, Connectio
     }
 
     toLocalTime(dateTimeString: string) {
-        return new Date(dateTimeString).toLocaleTimeString("de-at");
+        return new Date(dateTimeString).toLocaleTimeString("de-at", { hour: "numeric", minute: "numeric" });
     }
 
     toLocalDateTime(dateTimeString: string) {
