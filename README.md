@@ -5,6 +5,14 @@ In other words, it tells a user if she or he will arrive on time and what to do 
 
 ## Application Flow
 
+The flow chart below assumes the following itinerary in which the user misses a connection due to a delay and thus has to take an alternative train.
+
+![Example travel itinerary](documentation/itinerary.svg)
+
+The flow chart captures the entire workflow with dependencies to external systems for the above mentioned journey.
+
+![Flow chart](documentation/flowChart.svg)
+
 ### Prototype - Web Front End
 
 The user is able to register for journey updates using the booking code.
