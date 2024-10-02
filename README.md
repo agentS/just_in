@@ -5,6 +5,8 @@ In other words, it tells a user if she or he will arrive on time and what to do 
 
 ## Application Flow
 
+### Prototype - Web Front End
+
 The user is able to register for journey updates using the booking code.
 
 ![Form for registering for updates using the booking code](documentation/registrationBookingCode.png)
@@ -20,8 +22,6 @@ A user is informed about delays and if she or he can reach each connecting train
 The user is informed about a delay using a notification.
 
 ![Notification informing about delay](documentation/notification.png)
-
-### Web Front End
 
 ## Architecture
 
