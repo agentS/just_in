@@ -53,3 +53,24 @@ The railway operator's ticketing system just imports the booking details into Ju
 
 ![Sketch of the architecture](documentation/architecture.svg)
 
+# Running the Application
+
+## Server
+
+The REST service requires a `.env` file for configuring the secrets for acessing the APIs. Below an example is shown:
+
+```ini
+DB_CLIENT_ID="***"
+DB_API_KEY="***"
+```
+
+The server can be started by running `bun run index.ts`
+
+## Web Fronted
+
+For starting the web frontend, change into the folder `just-in-frontend` and then run the command `npm run start`:
+
+```bash
+cd ./just-in-frontend/
+npm run start
+```
